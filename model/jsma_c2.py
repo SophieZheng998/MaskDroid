@@ -21,7 +21,7 @@ class JSMA_c2(JSMA):
         adj = adj.coalesce()
         #adj = adj.to(torch.float16)
         #adj = adj.half()
-        y_pred, logits_cl = self.model.evaluate(apk.x, adj, apk.batch)
+        y_pred, logits_cl, _ = self.model.evaluate(apk.x, adj, apk.batch)
         #y_pred = logits.argmax(dim=1)
         #y_pred = torch.max(y_pred)
         
@@ -66,7 +66,7 @@ class JSMA_c2(JSMA):
             new_adj = new_adj.to_sparse()
             self.model.encoder.convs[0].cached = True
 
-            _, y_score  = self.model.evaluate(x_features, new_adj, api_batchs)
+            _, y_score, _  = self.model.evaluate(x_features, new_adj, api_batchs)
             
             for i in range(y_score.shape[1]):
 

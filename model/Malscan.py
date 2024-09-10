@@ -14,6 +14,7 @@ from logging import Logger
 import logging
 import random
 import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from parse import parse_args
 from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_score, confusion_matrix
 

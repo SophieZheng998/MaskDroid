@@ -3,6 +3,7 @@ import os
 import torch
 import logging
 import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from model.GNN import GNN
 from model.PreModel import PreModel
 from model.PreModel_v3 import PreModel_v3
@@ -64,24 +65,39 @@ if __name__ == '__main__':
 
      if args.modeltype == 'PreModel_v3':
           model = PreModel_v3(args)
-          if args.saveID == 'rate=0_2':
+          if args.saveID == 'rate=0_1':
+               checkpoint_path = "../weights/PreModel_v3/rate=0_1year=2020_lr=0.001_h=64_drop=0.2_ms=0.1/epoch=4.checkpoint.pth.tar"
+          elif args.saveID == 'rate=0_2':
                checkpoint_path = "../weights/PreModel_v3/rate=0_2year=2020_lr=0.001_h=64_drop=0.2_ms=0.2/epoch=19.checkpoint.pth.tar"
+          elif args.saveID == 'rate=0_3':
+               checkpoint_path = "../weights/PreModel_v3/rate=0_3year=2020_lr=0.001_h=64_drop=0.2_ms=0.3/epoch=7.checkpoint.pth.tar"
+          elif args.saveID == 'rate=0_4':
+               checkpoint_path = "../weights/PreModel_v3/rate=0_4year=2020_lr=0.001_h=64_drop=0.2_ms=0.4/epoch=19.checkpoint.pth.tar"
           elif args.saveID == 'rate=0_5':
                checkpoint_path = "../weights/PreModel_v3/rate=0_5year=2020_lr=0.001_h=64_drop=0.2_ms=0.5/epoch=19.checkpoint.pth.tar"
+          elif args.saveID == 'rate=0_6':
+               checkpoint_path = "../weights/PreModel_v3/rate=0_6year=2020_lr=0.001_h=64_drop=0.2_ms=0.6/epoch=10.checkpoint.pth.tar"
+          elif args.saveID == 'rate=0_7':
+               checkpoint_path = "../weights/PreModel_v3/rate=0_7year=2020_lr=0.001_h=64_drop=0.2_ms=0.7/epoch=10.checkpoint.pth.tar"
           elif args.saveID == 'rate=0_8':
                checkpoint_path = "..weights/PreModel_v3/year=2020_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=17.checkpoint.pth.tar"
           elif args.saveID == 'rate=0_9':
                checkpoint_path = "../weights/PreModel_v3/rate=0_9year=2020_lr=0.001_h=64_drop=0.2_ms=0.9/epoch=11.checkpoint.pth.tar"
           else:
-               checkpoint_path = "../weights/PreModel_v3/year=all_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=10.checkpoint.pth.tar"
-               checkpoint_path_sub = "../weights/BlackBox/MaskDroidyear=all_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=13.checkpoint.pth.tar"
+               # checkpoint_path = "../weights/PreModel_v3/year=all_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=10.checkpoint.pth.tar"
+               # checkpoint_path_sub = "../weights/BlackBox/MaskDroidyear=all_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=13.checkpoint.pth.tar"
+               checkpoint_path = "../weights/PreModel_v3/year=2016-2019_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=7.checkpoint.pth.tar"
+               checkpoint_path_sub = "../weights/BlackBox/MaskDroid_rebuttalyear=2016-2019_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=9.checkpoint.pth.tar"
      elif args.modeltype == 'GNN_VAE':
           model = GNN_VAE(args)
-          checkpoint_path = "../weights/GNN_VAE/year=all_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=8.checkpoint.pth.tar"    
-          checkpoint_path_sub = "../weights/BlackBox/FDVAEyear=all_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=8.checkpoint.pth.tar"
+          # checkpoint_path = "../weights/GNN_VAE/year=all_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=8.checkpoint.pth.tar"    
+          # checkpoint_path_sub = "../weights/BlackBox/FDVAEyear=all_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=8.checkpoint.pth.tar"
+          checkpoint_path = "../weights/GNN_VAE/year=2016-2019_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=1.checkpoint.pth.tar"
+          checkpoint_path_sub = "../weights/BlackBox/FDVAE_rebuttalyear=2016-2019_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=9.checkpoint.pth.tar"
      elif args.modeltype == 'MsDroid':
           model = MsDroid(args)
-          checkpoint_path = "..old/weights_old/MsDroid/REBUTTAL_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=7.checkpoint.pth.tar"
+          checkpoint_path = "../weights/MsDroid/year=2016-2019_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=1.checkpoint.pth.tar"
+          #checkpoint_path = "..old/weights_old/MsDroid/REBUTTAL_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=7.checkpoint.pth.tar"
           checkpoint_path_sub = "..old/weights_old/BlackBox/REBUTTALtype=gcn_lr=0.001_h=64_drop=0.2_JK=last_ms=0.8/epoch=12.checkpoint.pth.tar"
      elif args.modeltype == 'GNN':
           model = GNN(args)

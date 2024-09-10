@@ -138,6 +138,9 @@ class PreModel_RUN(AbstractRUN):
         self.model.eval()
 
         is_best, temp_flag, _  = self.evaluation(self.args, self.data, self.model, epoch, self.base_path, name = "valid")
+
+        _, _, _  = self.evaluation(self.args, self.data, self.model, epoch, self.base_path, name = "test")
+        
             
         if is_best:
             save_checkpoint(self.model, epoch, self.base_path, self.checkpoint_buffer, self.args.max2keep)

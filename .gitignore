@@ -155,7 +155,6 @@ cython_debug/
 weights/
 old/
 rebuttal/
-scripts/
 visualization/
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
@@ -164,11 +163,27 @@ visualization/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .vscode/
-data/
+data/__pycache__
+data/ASR/check.ipynb
+data/ASR/join_to_lable_dict.py
+data/ASR/preprocess_0604.py
+data/ASR/preprocess_asr_rebuttal.py
+data/ASR/preprocess_mamadroid.py
+data/ASR/preprocess_msdroid.py
+data/ASR/preprocess_original.py
+data/ASR/filenames/ablation.py
+data/ASR/filenames/commands.sh
+data/ASR/filenames/file_list.txt
+data/ASR/filenames/transfer_file.py
+data/ASR/filenames/transfer_server.py
+data/Drebin/
+data/Malscan_data/
 gnn.png 
 maskdroid-c.png 
 maskdroid-r.png 
 maskdroid.png 
+maskdroid_GNN.png
+visualization.py
 visualization_gnn.py
 model/file_names.csv
 model/FD_VAE.py

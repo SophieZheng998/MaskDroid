@@ -88,7 +88,7 @@ class PreModel_v3_RUN(PreModel_RUN):
         else:
             evaluate_idx = list(range(self.data.n_test))
             
-        eval_loader = DataLoader(evaluate_idx, batch_size=self.batch_size, shuffle=False)
+        eval_loader = DataLoader(evaluate_idx, batch_size=self.batch_size, shuffle=True, worker_init_fn=np.random.seed(self.seed))
 
         true_labels = []
         predicted_labels = []
@@ -101,13 +101,14 @@ class PreModel_v3_RUN(PreModel_RUN):
                 batch = Batch.from_data_list(evaluate_objects)
 
                 batch.cuda(self.device)
-                predictions, _ = model.evaluate(batch.x, batch.edge_index, batch.batch)
+                predictions, _, _ = model.evaluate(batch.x, batch.edge_index, batch.batch)
                
                 true_labels.extend(batch.y.cpu().tolist())
                 predicted_labels.extend(predictions.cpu().tolist())
 
                 if name == "test" and self.need_record:
                     for true_label, predicted_label, datapath in zip(batch.y.cpu().tolist(), predictions.cpu().tolist(), datapath_list):
+                        
                         if true_label == 1 and predicted_label == 1:
                             names.append(datapath)
 
@@ -159,19 +160,14 @@ class PreModel_v3(PreModel):
         
         num_nodes = x.shape[0]
         perm = torch.randperm(num_nodes, device=self.device)
-        num_mask_nodes = int(mask_rate * num_nodes)
-
+        
         # random masking
         num_mask_nodes = int(mask_rate * num_nodes)
         mask_nodes = perm[: num_mask_nodes]
-        #keep_nodes = perm[num_mask_nodes: ]
 
         out_x_init = self.preprocess(x)
         out_x = out_x_init.clone()
-        token_nodes = mask_nodes
-        out_x[mask_nodes] = 0.0
-
-        out_x[token_nodes] += self.enc_mask_token
+        out_x[mask_nodes] = self.enc_mask_token
 
         return out_x_init, out_x, mask_nodes, #keep_nodes)
 

@@ -67,8 +67,8 @@ class AbstractRUN(nn.Module):
         with open(self.base_path +'stats.txt', 'a') as f:
             f.write(print_str + "\n")
 
-        #_, _, final_train = self.evaluation(self.args, self.data, self.model, self.data.best_valid_epoch, self.base_path, name = "train")
-        #_, _, final_valid = self.evaluation(self.args, self.data, self.model, self.data.best_valid_epoch, self.base_path, name = "valid")
+        _, _, final_train = self.evaluation(self.args, self.data, self.model, self.data.best_valid_epoch, self.base_path, name = "train")
+        _, _, final_valid = self.evaluation(self.args, self.data, self.model, self.data.best_valid_epoch, self.base_path, name = "valid")
         _, _, final_test = self.evaluation(self.args, self.data, self.model, self.data.best_valid_epoch, self.base_path, name = "test")
 
     # define the training process

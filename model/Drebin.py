@@ -10,6 +10,7 @@ import random
 random.seed(101)
 from sklearn.exceptions import ConvergenceWarning
 warnings.filterwarnings("ignore", category=ConvergenceWarning)
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from parse import parse_args
 import json
 from sklearn.feature_extraction.text import CountVectorizer as CountV
@@ -129,6 +130,7 @@ class Drebin(torch.nn.Module):
         
         return train_files, val_files, test_files, record_test_hashkey
 
+
     def list_test_files(self):
         """
         List the data files.
@@ -227,7 +229,7 @@ class Drebin(torch.nn.Module):
             # Train
             max_iter = self.max_iter
             train_start_time = time.time()
-            model = LinearSVC(max_iter=max_iter, C=0.1, tol=1e-6)
+            model = LinearSVC(max_iter=max_iter)
             model.fit(x_train, y_train)
             train_end_time = time.time()
 
@@ -297,7 +299,7 @@ class Drebin(torch.nn.Module):
             model = joblib.load(self.save_path)
             y_pred_test = model.predict(x_test)
             ret_test, matching_keys = self.eval_metrics(y_test, y_pred_test, record_test_hashkey)
-        elif model_type == 'mlp':
+        elif self.model_type == 'mlp':
             model = torch.load(self.save_path)
             test_data = SimpleDataset(x_test, y_test)
             ret_test = mlp_evaluate(test_data, model)

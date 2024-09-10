@@ -7,6 +7,7 @@ import sys
 import random
 import numpy as np
 import json
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from parse import parse_args
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier

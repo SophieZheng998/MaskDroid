@@ -20,16 +20,20 @@ from torch_geometric.nn.norm import BatchNorm
 from torch_geometric.nn.pool import global_mean_pool, global_max_pool
 from torch_geometric.nn.conv import GINConv, SAGEConv, GATConv, GCNConv
 from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_score, confusion_matrix
+import os
 
 
 
 class BlackBox_RUN(GNN_RUN):
     ### PreModel_v3
     #def __init__(self, args, checkpoint_path = "../weights/PreModel_v3/year=all_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=10.checkpoint.pth.tar"):
+    #def __init__(self, args, checkpoint_path = "/storage_fast/jnzheng/GCL_security/weights/PreModel_v3/year=2016-2019_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=7.checkpoint.pth.tar"):
     ### FDVAE
     #def __init__(self, args, checkpoint_path = "../weights/GNN_VAE/year=all_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=8.checkpoint.pth.tar"):
+    #def __init__(self, args, checkpoint_path = "/storage_fast/jnzheng/GCL_security/weights/GNN_VAE/year=2016-2019_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=0.checkpoint.pth.tar"):
     ### Msdroid
-    def __init__(self, args, checkpoint_path = "../weights/MsDroid/year=all_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=1.checkpoint.pth.tar"):
+    #def __init__(self, args, checkpoint_path = "../weights/MsDroid/year=all_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=1.checkpoint.pth.tar"):
+    def __init__(self, args, checkpoint_path = "/storage_fast/jnzheng/GCL_security/weights/MsDroid/year=2016-2019_lr=0.001_h=64_drop=0.2_ms=0.8/epoch=1.checkpoint.pth.tar"):
         super().__init__(args)
 
         self.checkpoint_path = checkpoint_path
@@ -57,7 +61,7 @@ class BlackBox_RUN(GNN_RUN):
         self.blackmodel.cuda(self.device)
 
         # TODO
-        with open("/storage_fast/jnzheng/GCL_security_copy/data/ASR/label_dict.json", "r") as f:
+        with open("/storage_fast/jnzheng/GCL_security/data/ASR/label_dict_rebuttal.json", "r") as f:
             self.label_dictionary = json.load(f)
 
     def train_one_epoch(self, epoch):
@@ -94,7 +98,7 @@ class BlackBox_RUN(GNN_RUN):
             elif self.blackboxtype == 'PreModel':
                 teacher_labels, _, _ = self.blackmodel.evaluate(data.x, data.edge_index, data.batch)
             elif self.blackboxtype == 'PreModel_v3' or self.blackboxtype == 'PreModel_v4':
-                teacher_labels, _ = self.blackmodel.evaluate(data.x, data.edge_index, data.batch)
+                teacher_labels, _, _ = self.blackmodel.evaluate(data.x, data.edge_index, data.batch)
             elif self.blackboxtype == 'GNN_VAE' :
                 teacher_labels, _ = self.blackmodel.evaluate(data.x, data.edge_index, data.batch)
             elif self.blackboxtype == 'MsDroid':
@@ -147,7 +151,7 @@ class BlackBox_RUN(GNN_RUN):
                 elif self.blackboxtype == 'PreModel':
                     teacher_labels, _, _ = self.blackmodel.evaluate(batch.x, batch.edge_index, batch.batch)
                 elif self.blackboxtype == 'PreModel_v3' or self.blackboxtype == 'PreModel_v4':
-                    teacher_labels, _ = self.blackmodel.evaluate(batch.x, batch.edge_index, batch.batch)
+                    teacher_labels, _ , _ = self.blackmodel.evaluate(batch.x, batch.edge_index, batch.batch)
                 elif self.blackboxtype == 'MsDroid':
                     teacher_labels = []
                     for data_name in data_paths:

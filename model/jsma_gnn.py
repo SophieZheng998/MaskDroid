@@ -155,7 +155,7 @@ class JSMA():
         APR = (np.sum(iter_list)*self.num_new_edge_iter) / np.sum(total_edge_list) if iter_list else 0 
         self.logger.debug("JSMA: Avg iter: {}".format(avg_iter))
         self.logger.debug("Modify {} edges on average".format(avg_iter * self.num_new_edge_iter))
-        self.logger.debug("APR: {}".format(APR * 100))
+        self.logger.debug("APR:  {:.2f}%".format(APR * 100))
 
         self.logger.debug("# edges modified : {}".format(np.sum(iter_list)*self.num_new_edge_iter))
         self.logger.debug("# edges : {}".format(np.sum(total_edge_list)))

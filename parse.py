@@ -128,7 +128,8 @@ def parse_args():
                         help='whether the attack is for ablation study or not')
 
     # running sh
-    parser.add_argument("--sh", action="store_true")
+    parser.add_argument("--sh", action="store_true",
+                        help = "whether need to restore from pretrained checkpoints")
 
     parser.add_argument("--restore_epoch", type=int, default="0")
 
